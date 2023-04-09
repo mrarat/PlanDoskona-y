@@ -35,14 +35,13 @@ const received_message = reactive({ str : ''})
 function get_message_back() {
   message_sent.value = message.str
 
-  /* TODO
-  axios.get('localhost:<port>/sth', {
+  axios.get('http://localhost:8000/mymessage', {
     params: {
       msg: message_sent.value
     }
   })
   .then(function (response) {
-    
+    received_message.str = response.data.message
   })
   .catch(function (error) {
     console.log(error);
@@ -50,7 +49,20 @@ function get_message_back() {
   .finally(function () {
     // always executed
   });
-  */  
+}
+
+function get_country() {
+  axios.get('http://127.0.0.1:8000/countries/1/', {
+  })
+  .then(function (response) {
+    console.log(response)
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
 }
 
 </script>
@@ -72,8 +84,9 @@ function get_message_back() {
     <div id="api-backend">
       <input v-model="message.str" placeholder="Type here">
       <button @click="get_message_back">get message back</button>
-      <p>original message: <b>{{ message_sent.value }}</b></p>
+      <p>original message: <b>{{ message_sent }}</b></p>
       <p>received message: {{ received_message.str }}</p>
+      <button @click="get_country">get country</button>
     </div>
   </div>
 </template>
