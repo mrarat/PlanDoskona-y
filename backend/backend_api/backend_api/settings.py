@@ -24,12 +24,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n&5&!8udl!yxjblnfp(4m4^vp656#3emwxkv3dg^+_sl3pz+z@'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'debug-secret-key') # I do not know why it is needed in this case.
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False' # when deploying create an environment variabele 'DJANGO_DEBUG = False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://plandoskonaly.herokuapp.com/',
+    'https://plandoskonaly-frontend.herokuapp.com/',
+    'https://plandoskonaly-backend.herokuapp.com/',
+    'http://localhost:8000', # probably not needed
+    'http://127.0.0.1:8000', # probably not needed
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -124,6 +132,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATIC_URL = '/static/'
 

@@ -18,9 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('', views.index, name='index'), # serves Vue.js frontend at root
     path('admin/', admin.site.urls),
     path('mymessage/', include('mymessage.urls')),
     path('', include("countries.urls"))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # maybe not needed

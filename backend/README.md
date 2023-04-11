@@ -20,3 +20,13 @@ pip install -r requirements.txt
 ```sh
 py backend/backend_api/manage.py runserver
 ```
+
+### Run and Hot-Reload for production
+Make sure that you have set up an environment variable `DJANGO_DEBUG = False` .
+
+You can also specify `SECRET_KEY = <your-key>` as environment variable. 
+
+```sh
+py backend/backend_api/manage.py collectstatic
+py backend/backend_api/manage.py runserver
+```
