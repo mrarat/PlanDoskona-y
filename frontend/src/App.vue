@@ -51,10 +51,14 @@ function get_message_back() {
   });
 }
 
+const country = ref({})
+var con = { str: 'sth'}
+
 function get_country() {
   axios.get('http://localhost:8000/countries/1/', {
   })
   .then(function (response) {
+    country.value = response.data
     console.log(response)
   })
   .catch(function (error) {
@@ -87,6 +91,7 @@ function get_country() {
       <p>original message: <b>{{ message_sent }}</b></p>
       <p>received message: {{ received_message.str }}</p>
       <button @click="get_country">get country</button>
+      <pre>{{ country }}</pre>
     </div>
   </div>
 </template>

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'whitenoise.runserver_nostatic',
     'rest_framework', # tutorial https://realpython.com/api-integration-in-python/#django-rest-framework
     'corsheaders', # fix for 'Cross-Origin Request Blocked'
     'countries', # tutorial
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # fix for 'Cross-Origin Request Blocked'
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -152,3 +154,10 @@ CORS_ORIGIN_WHITELIST = [ # fix for 'Cross-Origin Request Blocked'
     'http://localhost:5173',
     'http://127.0.0.1:5173', # fix for another 'Cross-Origin Request Blocked'
 ]
+
+# Storages
+STORAGES = {
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
