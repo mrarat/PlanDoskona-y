@@ -18,7 +18,7 @@ pip install -r requirements.txt
 ### Run and Hot-Reload for Development
 
 ```sh
-py backend/backend_api/manage.py runserver
+py backend_api/manage.py runserver
 ```
 
 ### Run and Hot-Reload for production
