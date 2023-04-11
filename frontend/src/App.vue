@@ -35,7 +35,7 @@ const received_message = reactive({ str : ''})
 function get_message_back() {
   message_sent.value = message.str
 
-  axios.get('http://localhost:8000/mymessage', {
+  axios.get('http://localhost:8000/mymessage', { // 'http://localhost:8000/mymessage' does not work, but '/mymessage' works
     params: {
       msg: message_sent.value
     }
@@ -52,7 +52,7 @@ function get_message_back() {
 }
 
 function get_country() {
-  axios.get('http://127.0.0.1:8000/countries/1/', {
+  axios.get('http://localhost:8000/countries/1/', {
   })
   .then(function (response) {
     console.log(response)

@@ -12,5 +12,11 @@ This template should help get you started developing Django and Django REST Fram
 python -m venv venv
 Set-ExecutionPolicy Unrestricted -Scope Process # for Windows
 venv\Scripts\activate
-pip install django djangorestframework
+pip install -r requirements.txt
+```
+
+### Run and Hot-Reload for Development
+
+```sh
+py backend/backend_api/manage.py runserver
 ```
