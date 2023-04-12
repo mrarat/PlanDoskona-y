@@ -2,6 +2,9 @@
 import { ref, reactive } from 'vue';
 import axios from 'axios';
 
+const USOS_API_URL = 'https://usosapps.uw.edu.pl/services'
+const BACKEND_API_URL = import.meta.env.VITE_API_URL
+
 // api-usos
 const course_name = ref('')
 const course = reactive({ name : course_name.value })
@@ -10,7 +13,7 @@ const courses_info = reactive({ arr : [] })
 function get_course_id() {
   course_name.value = course.name
 
-  axios.get('https://usosapps.uw.edu.pl/services/courses/search', {
+  axios.get(USOS_API_URL + '/courses/search', {
     params: {
       lang: 'pl',
       name: course_name.value
@@ -35,7 +38,7 @@ const received_message = reactive({ str : ''})
 function get_message_back() {
   message_sent.value = message.str
 
-  axios.get('http://localhost:8000/mymessage', { // 'http://localhost:8000/mymessage' does not work, but '/mymessage' works
+  axios.get(BACKEND_API_URL + '/mymessage', { // 'http://localhost:8000/mymessage' does not work, but '/mymessage' works
     params: {
       msg: message_sent.value
     }
@@ -52,10 +55,9 @@ function get_message_back() {
 }
 
 const country = ref({})
-var con = { str: 'sth'}
 
 function get_country() {
-  axios.get('http://localhost:8000/countries/1/', {
+  axios.get(BACKEND_API_URL + '/countries/1/', {
   })
   .then(function (response) {
     country.value = response.data
