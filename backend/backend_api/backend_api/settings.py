@@ -154,9 +154,8 @@ CORS_ORIGIN_WHITELIST = [ # fix for 'Cross-Origin Request Blocked'
     'http://127.0.0.1:8000', # fix for another 'Cross-Origin Request Blocked'
     'http://localhost:5173',
     'http://127.0.0.1:5173', # fix for another 'Cross-Origin Request Blocked'
-    '.herokuapp.com',
-    'https://plandoskonaly.herokuapp.com/',
-    'https://plandoskonaly-frontend.herokuapp.com/',
+    'https://plandoskonaly.herokuapp.com',
+    'https://plandoskonaly-frontend.herokuapp.com',
 ]
 
 # Storages

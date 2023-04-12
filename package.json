@@ -1,5 +1,5 @@
 {
     "scripts": {
-        "start": "cd frontend && npm install && npm run build && cd .."
+        "build": "echo frontend-build && cd frontend && npm install && npm run build && cd .."
     }
 }
