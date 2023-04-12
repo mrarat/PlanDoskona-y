@@ -30,6 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'debug-secret-key') # I do not know wh
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False' # when deploying create an environment variabele 'DJANGO_DEBUG = False'
 
 ALLOWED_HOSTS = [
+    '.herokuapp.com',
     'https://plandoskonaly.herokuapp.com/',
     'https://plandoskonaly-frontend.herokuapp.com/',
     'https://plandoskonaly-backend.herokuapp.com/',
