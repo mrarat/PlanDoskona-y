@@ -3,9 +3,7 @@ import { ref, reactive } from 'vue';
 import axios from 'axios';
 
 const USOS_API_URL = 'https://usosapps.uw.edu.pl/services'
-const BACKEND_API_URL = import.meta.env.hasOwnProperty('VITE_API_URL') ? import.meta.env.VITE_API_URL : 'http://localhost:8000'
-
-console.log(BACKEND_API_URL)
+const BACKEND_API_URL = import.meta.env.VITE_API_URL == undefined ? 'http://localhost:8000' : import.meta.env.VITE_API_URL
 
 // api-usos
 const course_name = ref('')
