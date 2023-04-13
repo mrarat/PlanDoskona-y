@@ -5,31 +5,6 @@ import axios from 'axios';
 const USOS_API_URL = 'https://usosapps.uw.edu.pl/services'
 const BACKEND_API_URL = import.meta.env.VITE_API_URL == undefined ? 'http://localhost:8000' : import.meta.env.VITE_API_URL
 
-// api-usos
-const course_name = ref('')
-const course = reactive({ name : course_name.value })
-const courses_info = reactive({ arr : [] })
-
-function get_course_id() {
-  course_name.value = course.name
-
-  axios.get(USOS_API_URL + '/courses/search', {
-    params: {
-      lang: 'pl',
-      name: course_name.value
-    }
-  })
-  .then(function (response) {
-    courses_info.arr = response.data.items
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  .finally(function () {
-    // always executed
-  });  
-}
-
 // api-backend
 const message_sent = ref('')
 const message = reactive({ str : message_sent.value})
@@ -71,21 +46,97 @@ function get_country() {
   });
 }
 
+// api-usos
+const course_name = ref('')
+const course = reactive({ name : course_name.value })
+const courses_info = reactive({ arr : [] })
+const groups = ref([])
+const size = ref(0)
+const selected = ref('')
+
+function get_course_id() {
+  groups.value = []
+  course_name.value = course.name
+
+  axios.get(USOS_API_URL + '/courses/search', {
+    params: {
+      lang: 'pl',
+      name: course_name.value
+    }
+  })
+  .then(function (response) {
+    courses_info.arr = response.data.items
+    size.value = courses_info.arr.length
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });  
+}
+
+function get_groups() {
+  courses_info.arr = []
+  course_name.value = course.name
+
+  axios.get(USOS_API_URL + '/tt/course_edition', {
+    params: {
+      course_id: course_name.value,
+      term_id: selected.value
+    }
+  })
+  .then(function (response) {
+    let collected = []
+    for (let item of response.data)
+      collected.push(item.name.pl)
+    console.log(collected);
+    groups.value = collected
+    size.value = collected.length
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });  
+}
+
 </script>
 
 <template>
   <div id="page" v-if="true">
     <div id="api-usos">
+
       <input v-model="course.name" placeholder="Type here">
       <button @click="get_course_id">get course id</button>
-      <p>Search for word: <b>{{ course_name.value }}</b></p>
-      <p>Number of results: {{ courses_info.arr.length }}</p>
+      <button @click="get_groups">get groups</button>
+
+      <span> Selected: {{ selected }}</span>
+      <select v-model="selected">
+        <option disabled value="">Please select one</option>
+        <option>2023L</option>
+        <option>2023Z</option>
+        <option>2022L</option>
+        <option>2022Z</option>
+      </select>
+
+      <p>Search for word: <b>{{ course.name }}</b></p>
+      <p>Number of results: {{ size }}</p>
+
       <ul>
         <li v-for="c in courses_info.arr">
           <p>course_id = {{ c.course_id }}</p>
           <p>match = {{ c.match }}</p>
         </li>
       </ul>
+
+      <ul>
+        <li v-for="c in groups">
+          <p>{{ c }}</p>
+        </li>
+      </ul>
+
     </div>
     <div id="api-backend">
       <input v-model="message.str" placeholder="Type here">
