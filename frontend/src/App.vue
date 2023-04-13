@@ -89,7 +89,7 @@ function get_groups() {
   .then(function (response) {
     let collected = []
     for (let item of response.data)
-      collected.push(item.name.pl)
+      collected.push(item)
     console.log(collected);
     groups.value = collected
     size.value = collected.length
@@ -133,7 +133,9 @@ function get_groups() {
 
       <ul>
         <li v-for="c in groups">
-          <p>{{ c }}</p>
+          <p>{{ c.name.pl }}</p>
+          <p>{{ c.start_time }}</p>
+          <p>{{ c.end_time }}</p>
         </li>
       </ul>
 
