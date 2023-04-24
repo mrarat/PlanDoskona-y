@@ -18,4 +18,4 @@ Użytkownikami strony będą studenci Uniwersytetu Warszawskiego, w szczególno�
 
 ## Technologie
 - frontend: Vue.js (JavaScript lub TypeScript)
-- backend: Django (Python), Oracle DB
+- backend: Django (Python), SQLite

@@ -19,7 +19,7 @@
 - udostępnienie funkcjonalności poprzez testowe UI
 
 ## Sprint 3 - deadline 25.05.2023, 3 tygodnie
-- zaimplementowanie możliwości zapisywania planu na koncie użytkownika
+- zaimplementowanie przesyłania statystyk do serwera
 - stworzenie docelowego UI
 - stworzenie opisu architektury
 
