@@ -27,7 +27,7 @@ jobs:
 
     - name: Run Django tests
       run: |
-        cd backend
+        cd backend/backend_api
         python manage.py test
 
     - name: Setup Node.js
