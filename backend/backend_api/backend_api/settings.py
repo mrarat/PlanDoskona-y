@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'corsheaders', # fix for 'Cross-Origin Request Blocked'
     'countries', # tutorial
     'mymessage', # api-test
+    'database_api',
 ]
 
 MIDDLEWARE = [
