@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "install": "npm install --prefix frontend",
-    "postinstall": "npm run heroku-build --prefix frontend"
+    "postinstall": "cd frontend && npm run build && cd .."
   }
 }
