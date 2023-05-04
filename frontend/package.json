@@ -13,8 +13,13 @@
     "test": "npm run test:unit"
   },
   "dependencies": {
+    "@daypilot/daypilot-lite-vue": "^3.13.1",
+    "@glhrm/vue-scheduler": "^1.3.0",
     "axios": "^1.3.5",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-multiselect": "^3.0.0-alpha.2",
+    "vue-search-select": "^3.1.0",
+    "vuetify": "^3.2.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
