@@ -13,6 +13,7 @@
     "test": "npm run test:unit"
   },
   "dependencies": {
+    "vite": "^4.1.4",
     "axios": "^1.3.5",
     "vue": "^3.2.47"
   },
