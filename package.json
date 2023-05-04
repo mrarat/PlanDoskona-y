@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install": "npm install --prefix frontend",
-    "postinstall": "npm run build --prefix frontend"
-  },
-  "devDependencies": {
-    "vite": "^4.3.4"
+    "install": "cd frontend && npm install && cd ..",
+    "postinstall": "cd frontend && npm run build && cd .."
   }
 }
