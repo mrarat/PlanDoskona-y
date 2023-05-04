@@ -5,5 +5,8 @@
   "scripts": {
     "install": "npm install --prefix frontend",
     "postinstall": "npm run build --prefix frontend"
+  },
+  "dependencies": {
+    "frontend-dep": "file:frontend"
   }
 }

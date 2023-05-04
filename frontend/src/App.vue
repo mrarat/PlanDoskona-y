@@ -6,71 +6,50 @@ const USOS_API_URL = 'https://usosapps.uw.edu.pl/services'
 const BACKEND_API_URL =
   import.meta.env.VITE_API_URL == undefined ? 'http://localhost:8000' : import.meta.env.VITE_API_URL
 
-// api-backend
-const message_sent = ref('')
-const message = reactive({ str: message_sent.value })
-const received_message = reactive({ str: '' })
+  const drawer = ref(null)
 
-function get_message_back() {
-  message_sent.value = message.str
+const select_semester = ref(null);
+const items_semester = ref([
+  { title: 'Semestr letni 2023/2024 (2023L)', value: '2023L' },
+  { title: 'Semestr zimowy 2023 (2023Z)', value: '2023Z' },
+  { title: 'Semestr letni 2022/2023 (2022L)', value: '2022L' },
+  { title: 'Semestr zimowy 2022 (2022Z)', value: '2022Z' },
+  { title: 'Semestr letni 2021/2022 (2021L)', value: '2021L' },
+  { title: 'Semestr zimowy 2021 (2021Z)', value: '2021Z' },
+]);
 
-  axios
-    .get(BACKEND_API_URL + '/mymessage', {
-      // 'http://localhost:8000/mymessage' does not work, but '/mymessage' works
-      params: {
-        msg: message_sent.value
-      }
-    })
-    .then(function (response) {
-      received_message.str = response.data.message
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
-    .finally(function () {
-      // always executed
-    })
-}
+const select_course = ref(null);
+const items_course = ref([{ state: 'some state', abbr: 'some abbr' },]);
 
-const country = ref({})
+const search1 = async (query) => {
+  if (!query) return;
+  
+  // Simulate a 400ms delay
+  await new Promise((resolve) => setTimeout(resolve, 400));
 
-function get_country() {
-  axios
-    .get(BACKEND_API_URL + '/countries/1/', {})
-    .then(function (response) {
-      country.value = response.data
-      console.log(response)
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
-    .finally(function () {
-      // always executed
-    })
-}
+  // Assign the simulated data to items1
+  items_course.value = [
+    { state: 'some state', abbr: 'some abbr' },
+  ];
+};
 
-// api-usos
-const course_name = ref('')
-const course = reactive({ name: course_name.value })
-const courses_info = reactive({ arr: [] })
-const groups = ref([])
-const size = ref(0)
-const selected = ref('')
+const loading_test = ref(false)
+const search_test = ref(null)
+const select_test = ref(null);
+const items_test = ref([]);
 
-function get_course_id() {
-  groups.value = []
-  course_name.value = course.name
-
-  axios
-    .get(USOS_API_URL + '/courses/search', {
+function query_course(course_name) {
+  axios.get(USOS_API_URL + '/courses/search', {
       params: {
         lang: 'pl',
-        name: course_name.value
+        name: course_name,
+        fields: 'name|course_id',
+        num: 20,
       }
     })
     .then(function (response) {
-      courses_info.arr = response.data.items
-      size.value = courses_info.arr.length
+      console.log(response.data.items[0])
+      items_test.value = response.data.items.map((item) => { return {title: `${item.name.pl} (${item.course_id})`, value: item.course_id} } );
     })
     .catch(function (error) {
       console.log(error)
@@ -78,113 +57,181 @@ function get_course_id() {
     .finally(function () {
       // always executed
     })
+
+  items_test.value = [
+    { title: 'md', value: 5},
+  ]
 }
 
-function get_groups() {
-  courses_info.arr = []
-  course_name.value = course.name
+const loading = ref(false)
+const items = ref([])
+const search = ref(null)
+const select = ref(null)
+const states = [
+  'Alabama',
+  'Alaska',
+  'American Samoa',
+  'Arizona',
+  'Arkansas',
+  'California',
+  'Colorado',
+  'Connecticut',
+  'Delaware',
+  'District of Columbia',
+  'Federated States of Micronesia',
+  'Florida',
+  'Georgia',
+  'Guam',
+  'Hawaii',
+  'Idaho',
+  'Illinois',
+  'Indiana',
+  'Iowa',
+  'Kansas',
+  'Kentucky',
+  'Louisiana',
+  'Maine',
+  'Marshall Islands',
+  'Maryland',
+  'Massachusetts',
+  'Michigan',
+  'Minnesota',
+  'Mississippi',
+  'Missouri',
+  'Montana',
+  'Nebraska',
+  'Nevada',
+  'New Hampshire',
+  'New Jersey',
+  'New Mexico',
+  'New York',
+  'North Carolina',
+  'North Dakota',
+  'Northern Mariana Islands',
+  'Ohio',
+  'Oklahoma',
+  'Oregon',
+  'Palau',
+  'Pennsylvania',
+  'Puerto Rico',
+  'Rhode Island',
+  'South Carolina',
+  'South Dakota',
+  'Tennessee',
+  'Texas',
+  'Utah',
+  'Vermont',
+  'Virgin Island',
+  'Virginia',
+  'Washington',
+  'West Virginia',
+  'Wisconsin',
+  'Wyoming',
+]
 
-  axios
-    .get(USOS_API_URL + '/tt/course_edition', {
-      params: {
-        course_id: course_name.value,
-        term_id: selected.value
-      }
+/*
+watch(search, val => {
+  if (val && val !== select.value) {
+    querySelections(val)
+  }
+})
+*/
+
+function querySelections(v) {
+  loading.value = true
+  // Simulated ajax query
+  setTimeout(() => {
+    items.value = states.filter(e => {
+      return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
     })
-    .then(function (response) {
-      let collected = []
-      for (let item of response.data) collected.push(item)
-      console.log(collected)
-      groups.value = collected
-      size.value = collected.length
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
-    .finally(function () {
-      // always executed
-    })
+    loading.value = false
+  }, 500)
 }
+
 </script>
 
 <template>
-  <div id="page" v-if="true">
-    <div id="api-usos">
-      <input v-model="course.name" placeholder="Type here" />
-      <button @click="get_course_id">get course id</button>
-      <button @click="get_groups">get groups</button>
+  <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer" 
+      class="bg-deep-purple"
+      theme="dark"
+      width="400"
+      permanent
+    >
+      <!--  -->
+      <v-list>
+      <v-list-item>
+        <v-select
+          v-model="select_semester"
+          :items="items_semester"
+          item-title="title"
+          item-value="value"
+          label="Wybierz semestr"
+        ></v-select>
+      </v-list-item>
 
-      <span> Selected: {{ selected }}</span>
-      <select v-model="selected">
-        <option disabled value="">Please select one</option>
-        <option>2023L</option>
-        <option>2023Z</option>
-        <option>2022L</option>
-        <option>2022Z</option>
-      </select>
+      <v-list-item>
+        <v-select
+          v-model="select_course"
+          :hint="select_course ? `${select_course.state}, ${select_course.abbr}` : 'nazwa przedmiotu, kod przedmiotu'"
+          :items="items_course"
+          item-title="state"
+          item-value="abbr"
+          label="Wyszukaj przedmiot"
+          placeholder="Wyszukaj przedmiot"
+          persistent-hint
+          return-object
+          single-line
+        ></v-select>
+      </v-list-item>
 
-      <p>
-        Search for word: <b>{{ course.name }}</b>
-      </p>
-      <p>Number of results: {{ size }}</p>
+      <v-list-item>
+        <v-autocomplete
+          v-model="select_test"
+          v-model:search="search_test"
+          :loading="loading_test"
+          :items="items_test"
+          item-title="title"
+          item-value="value"
+          hide-no-data
+          hide-details
+          label="Wyszukaj przedmiot"
+          @keyup.native.enter="query_course(search_test)"
+        ></v-autocomplete>
+      </v-list-item>
 
-      <ul>
-        <li v-for="(c, index) in courses_info.arr" :key="index">
-          <p>course_id = {{ c.course_id }}</p>
-          <p>match = {{ c.match }}</p>
-        </li>
-      </ul>
+      <v-list-item>
+        <v-autocomplete
+          v-model="select"
+          v-model:search="search"
+          :loading="loading"
+          :items="items"
+          hide-no-data
+          hide-details
+          label="What state are you from?"
+          @keyup.native.enter="querySelections(search)"
+        ></v-autocomplete>
+      </v-list-item>
 
-      <ul>
-        <li v-for="(c, index) in groups" :key="index">
-          <p>{{ c.name.pl }}</p>
-          <p>{{ c.start_time }}</p>
-          <p>{{ c.end_time }}</p>
-        </li>
-      </ul>
-    </div>
-    <div id="api-backend">
-      <input v-model="message.str" placeholder="Type here" />
-      <button @click="get_message_back">get message back</button>
-      <p>
-        original message: <b>{{ message_sent }}</b>
-      </p>
-      <p>received message: {{ received_message.str }}</p>
-      <button @click="get_country">get country</button>
-      <pre>{{ country }}</pre>
-    </div>
-  </div>
+    </v-list>
+      
+    </v-navigation-drawer>
+
+    <v-app-bar absolute color="pink">
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>PlanDoskonały</v-toolbar-title>
+    </v-app-bar>
+
+    <v-main>
+      <!--  -->
+      
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped>
-#page {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: 'api-usos api-backend';
-  height: 100vh;
-  gap: 10px;
-  background: black;
-  margin: 0;
-}
-
-#api-usos {
-  grid-area: api-usos;
-  background: white;
-  padding: 1rem;
-  margin: 10px;
-  overflow: scroll;
-}
-
-#api-backend {
-  grid-area: api-backend;
-  background: white;
-  padding: 1rem;
-  margin: 10px;
-  overflow: scroll;
-}
-
-input {
-  width: 100%;
+.v-app-bar {
+  background-color: purple;
 }
 </style>
