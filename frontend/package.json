@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node_modules/.bin/vite",
     "build": "node_modules/.bin/vite build",
+    "heroku-build": "node_modules/.bin/vite build",
     "preview": "node_modules/.bin/vite preview",
     "test:unit": "vitest",
     "coverage": "vitest run --coverage",
