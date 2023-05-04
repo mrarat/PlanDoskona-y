@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "install": "npm install --prefix frontend",
-    "postinstall": "cd frontend && npm run build && cd .."
+    "postinstall": "npm run build --prefix frontend"
+  },
+  "devDependencies": {
+    "vite": "^4.3.4"
   }
 }
