@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "install": "npm install --prefix frontend",
-    "postinstall": "npm run build --prefix frontend"
+    "postinstall": "PATH=$PATH:./frontend/node_modules/.bin npm run build --prefix frontend"
   }
 }
