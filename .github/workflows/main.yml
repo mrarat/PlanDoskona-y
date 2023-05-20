@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -25,10 +24,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run Django tests
+    - name: Run Django tests with coverage
       run: |
         cd backend/backend_api
-        python manage.py test
+        coverage run --source='.' manage.py test
+        coverage xml
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
@@ -40,7 +40,13 @@ jobs:
         cd frontend
         npm ci
 
-    - name: Run frontend tests
+    - name: Run frontend tests with coverage
       run: |
         cd frontend
-        npm test
+        npm run coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        files: backend/backend_api/coverage.xml,frontend/coverage/clover.xml
+        fail_ci_if_error: true
