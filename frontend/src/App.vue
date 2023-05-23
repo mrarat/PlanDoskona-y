@@ -101,7 +101,7 @@ async function query_course_unit(course_unit_id) {
 async function query_classgroup_dates(unit_id, group_number) {
   let dates = null
 
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  //await new Promise((resolve) => setTimeout(resolve, 1000))
 
   await axios
     .get(USOS_API_URL + '/tt/classgroup_dates2', {
@@ -158,35 +158,6 @@ function print_course(course_id, term_id) {
     console.log(response)
   })
 }
-
-/*
-function add_course() {
-
-}
-
-function query_unit_dates(unit_id) {
-  let unit = { id: unit_id }
-
-  let group_numbers = query_unit_groups_numbers(unit_id)
-  unit.groups = group_numbers.map(gn => { return { number: gn, dates: query_group_dates(unit_id, gn)}})
-
-  return unit
-}
-
-async function query_course_dates(course_id) {
-  let course = await query_course(course_id)
-  console.log(`course is null: ${course === null}`)
-  console.log('course:')
-  console.log(course)
-  course.units = course.course_units_ids.map(cu_id => query_unit_dates)
-  return course
-}
-
-function query(x) {
-  //console.log(x)
-  console.log(query_course_dates(x))
-}
-*/
 
 /*
 {
@@ -305,7 +276,7 @@ function query(x) {
             hide-no-data
             hide-details
             label="Wyszukaj przedmiot"
-            @keyup.native.enter="query_course_search(search_course)"
+            @keyup.enter="query_course_search(search_course)"
           ></v-autocomplete>
         </v-list-item>
 
@@ -349,6 +320,30 @@ function query(x) {
           </v-btn>
         </v-list-item>
       </v-list>
+
+      <v-expansion-panels>
+        <v-expansion-panel
+          v-for="i in 15"
+          :key="i"
+        >
+          <v-expansion-panel-title color="teal">
+            <span>Item</span>
+          </v-expansion-panel-title>
+
+
+          <v-expansion-panel-text>
+            <v-btn color="orange-darken-4">Delete</v-btn>
+            <v-list>
+              <v-list-item
+                v-for="i in 8"
+                :key="i"
+              >
+                <span>Some Group</span>
+              </v-list-item>
+            </v-list>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-navigation-drawer>
 
     <v-app-bar absolute color="pink">
