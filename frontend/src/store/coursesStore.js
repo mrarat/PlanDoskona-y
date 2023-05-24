@@ -31,6 +31,7 @@ export const useCoursesStore = defineStore('coursesStore', {
     },
 
     async submitCourses() {
+      // Iterate over all selected groups and submit them to backend
       this.courses.map(async (course) => {
         course.units.map(async (unit) => {
           unit.class_groups.map(async (group) => {
@@ -54,6 +55,6 @@ export const useCoursesStore = defineStore('coursesStore', {
           })
         })
       })
-    }
+    },
   },
 })

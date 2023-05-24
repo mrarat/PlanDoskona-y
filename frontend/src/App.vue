@@ -247,20 +247,41 @@ function print_course(course_id, term_id) {
 }
 */
 
+const rerenderKey = ref(0)
+
+function rerender() {
+  rerenderKey.value++
+}
+
 import { useCoursesStore } from './store/coursesStore'
 const coursesStore = useCoursesStore()
 
 async function addCourse(course_id, term_id) {
   let course = await get_course(course_id, term_id)
   coursesStore.addCourse(course)
+  //rerender()
+}
+
+// testing
+const courses = ref([])
+
+let cid = 0
+function addc() {
+  courses.value.push({
+    id: cid,
+    name: `Course ${cid}`
+  })
+
+  cid++
 }
 
 </script>
 
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" class="bg-deep-purple" theme="dark" width="500" permanent>
+    <v-navigation-drawer app v-model="drawer" class="bg-deep-purple" theme="dark" width="500" height="100%" permanent :key="rerenderKey">
       <!--  -->
+      <div style="overflow-y: scroll; height: 100%" :key="rerenderKey">
       <v-list>
         <v-list-item>
           <v-select
@@ -292,71 +313,173 @@ async function addCourse(course_id, term_id) {
         </v-list-item>
 
         <v-list-item>
-          <v-btn variant="outlined" @click="query_course_edition('1000-212bMD', '2022L')">
-            query_course_edition
-          </v-btn>
-        </v-list-item>
-
-        <v-list-item>
-          <v-btn variant="outlined" @click="query_course_unit(486450)"> query_course_unit </v-btn>
-        </v-list-item>
-
-        <v-list-item>
-          <v-btn variant="outlined" @click="query_classgroup_dates(486450, 1)">
-            query_classgroup_dates
-          </v-btn>
-        </v-list-item>
-
-        <v-list-item>
-          <v-btn variant="outlined" @click="get_unit(486450)"> get_unit </v-btn>
-        </v-list-item>
-
-        <v-list-item>
-          <v-btn variant="outlined" @click="get_course('1000-212bMD', '2022L')"> get_course </v-btn>
-        </v-list-item>
-
-        <v-list-item>
-          <v-btn variant="outlined" @click="print_course(select_course, select_semester)">
-            experiment
-          </v-btn>
-        </v-list-item>
-
-        <v-list-item>
-          <v-btn variant="outlined" @click="print_course('1000-212bMD', '2022L')">
-            MD
-          </v-btn>
-        </v-list-item>
-
-        <v-list-item>
           <v-btn variant="outlined" @click="console.log(coursesStore.courses)">
             store
           </v-btn>
         </v-list-item>
+
+        <v-list-item>
+          <v-btn variant="outlined" @click="rerender">
+            rerender
+          </v-btn>
+        </v-list-item>
+
+        <v-list-item>
+          <v-btn variant="outlined" @click="addc">
+            addc
+          </v-btn>
+        </v-list-item>
+
+        <v-list-item>
+          <v-btn variant="outlined" @click="addCourse('1000-212bMD', '2022L')">
+            add MD
+          </v-btn>
+        </v-list-item>
+
+        <v-list-item>
+          <v-btn variant="outlined" @click="addCourse('1000-214bIOP', '2022L')">
+            add IOP
+          </v-btn>
+        </v-list-item>
       </v-list>
 
+      
+
+      <!--
+      <v-expansion-panels>
+        <v-expansion-panel
+          v-for="course in coursesStore.courses"
+          :key="{ course_id: course.course_id, term_id: course.term_id}"
+          style="overflow-y: visible;"
+        >
+          <v-expansion-panel-title color="teal">
+            <span>{{ course.course_name.pl }}</span>
+          </v-expansion-panel-title>
+
+          <v-expansion-panel-text>
+            <v-btn color="orange-darken-4">Delete</v-btn>
+            <div
+              v-for="unit in course.units"
+              :key="unit.id"
+            >
+              <v-list>
+                <v-list-item
+                  v-for="group in unit.class_groups"
+                  :key="{ course_unit_id: group.course_unit_id, number: group.number }"
+                >
+                  <v-row class="d-flex align-center justify-space-between">
+                    <v-col cols="10" class="flex-grow-0"><v-sheet><span>{{ group.dates[0].name.pl }} | {{ group.number }}</span></v-sheet></v-col>
+                    <v-col cols="2" class="flex-grow-0"><v-sheet><v-checkbox hide-details density="compact" class="float-right"></v-checkbox></v-sheet></v-col>
+                  </v-row>
+                </v-list-item>
+              </v-list>
+            </div>
+            
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+      -->
+
+      <!--
       <v-expansion-panels>
         <v-expansion-panel
           v-for="i in 15"
           :key="i"
         >
           <v-expansion-panel-title color="teal">
-            <span>Item</span>
+            <span>course_name</span>
           </v-expansion-panel-title>
-
 
           <v-expansion-panel-text>
             <v-btn color="orange-darken-4">Delete</v-btn>
-            <v-list>
-              <v-list-item
-                v-for="i in 8"
-                :key="i"
-              >
-                <span>Some Group</span>
-              </v-list-item>
-            </v-list>
+            <div
+              v-for="i in 3"
+              :key="i"
+            >
+              <v-list>
+                <v-list-item
+                  v-for="i in 6"
+                  :key="i"
+                >
+                  <v-row class="d-flex align-center justify-space-between">
+                    <v-col cols="10" class="flex-grow-0"><v-sheet><span>group</span></v-sheet></v-col>
+                    <v-col cols="2" class="flex-grow-0"><v-sheet><v-checkbox hide-details density="compact" class="float-right"></v-checkbox></v-sheet></v-col>
+                  </v-row>
+                </v-list-item>
+              </v-list>
+            </div>
+            
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
+      -->
+
+      <!--
+      <v-expansion-panels>
+        <v-expansion-panel
+          v-for="course in courses"
+          :key="course.id"
+        >
+          <v-expansion-panel-title color="teal">
+            <span>{{ course.name }}</span>
+          </v-expansion-panel-title>
+
+          <v-expansion-panel-text>
+            <v-btn color="orange-darken-4">Delete</v-btn>
+            <div
+              v-for="i in 3"
+              :key="i"
+            >
+              <v-list>
+                <v-list-item
+                  v-for="i in 6"
+                  :key="i"
+                >
+                  <v-row class="d-flex align-center justify-space-between">
+                    <v-col cols="10" class="flex-grow-0"><v-sheet><span>group</span></v-sheet></v-col>
+                    <v-col cols="2" class="flex-grow-0"><v-sheet><v-checkbox hide-details density="compact" class="float-right"></v-checkbox></v-sheet></v-col>
+                  </v-row>
+                </v-list-item>
+              </v-list>
+            </div>
+            
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+      -->
+
+      <v-expansion-panels>
+        <v-expansion-panel
+          v-for="(course, index) in coursesStore.courses"
+          :key="index"
+        >
+          <v-expansion-panel-title color="teal">
+            <span>{{ course.course_name.pl }}</span>
+          </v-expansion-panel-title>
+
+          <v-expansion-panel-text>
+            <v-btn color="orange-darken-4">Delete</v-btn>
+            <div
+              v-for="unit in course.units"
+              :key="unit.id"
+            >
+              <v-list>
+                <v-list-item
+                  v-for="group in unit.class_groups"
+                  :key="group.number"
+                >
+                  <v-row class="d-flex align-center justify-space-between">
+                    <v-col cols="10" class="flex-grow-0"><v-sheet><span>{{ group.dates[0].name.pl }} | {{ group.number }}</span></v-sheet></v-col>
+                    <v-col cols="2" class="flex-grow-0"><v-sheet><v-checkbox hide-details density="compact" class="float-right"></v-checkbox></v-sheet></v-col>
+                  </v-row>
+                </v-list-item>
+              </v-list>
+            </div>
+            
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
     </v-navigation-drawer>
 
     <v-app-bar absolute color="pink">
