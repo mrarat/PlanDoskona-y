@@ -9,27 +9,30 @@ export const useCoursesStore = defineStore('coursesStore', {
 
   actions: {
     addCourse(course) {
-      if (!course)
-        return;
+      if (!course) return
 
       // Find the index of the course in the store
-      const courseIndex = this.courses.findIndex(c => c.course_id === course.course_id && c.term_id === course.term_id);
-      
+      const courseIndex = this.courses.findIndex(
+        (c) => c.course_id === course.course_id && c.term_id === course.term_id
+      )
+
       // If course already exists in the store, overwrite it
       if (courseIndex > -1) {
-        this.courses[courseIndex] = course;
+        this.courses[courseIndex] = course
       } else {
         // If course doesn't exist, add it to the store
-        this.courses.push(course);
+        this.courses.push(course)
       }
     },
 
     deleteCourse(course_id, term_id) {
       // Find the index of the course in the store
-      const index = this.courses.findIndex(c => c.course_id === course_id && c.term_id === term_id);
+      const index = this.courses.findIndex(
+        (c) => c.course_id === course_id && c.term_id === term_id
+      )
       // If the course is found, remove it from the store
       if (index > -1) {
-        this.courses.splice(index, 1);
+        this.courses.splice(index, 1)
       }
     },
 
@@ -38,26 +41,21 @@ export const useCoursesStore = defineStore('coursesStore', {
       this.courses.map(async (course) => {
         course.units.map(async (unit) => {
           unit.class_groups.map(async (group) => {
-            if (!group.selected)
-              return;
+            if (!group.selected) return
 
             await axios
               .get(BACKEND_API_URL + '/database_api/submit_course_group', {
                 params: {
                   course_unit_id: group.course_unit_id,
-                  group_number: group.number,
+                  group_number: group.number
                 }
-              })
-              .then(function (response) {
               })
               .catch(function (error) {
                 console.log(error)
               })
-              .finally(function () {
-              })
           })
         })
       })
-    },
-  },
+    }
+  }
 })
