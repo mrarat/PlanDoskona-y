@@ -9,6 +9,9 @@ export const useCoursesStore = defineStore('coursesStore', {
 
   actions: {
     addCourse(course) {
+      if (!course)
+        return;
+
       // Find the index of the course in the store
       const courseIndex = this.courses.findIndex(c => c.course_id === course.course_id && c.term_id === course.term_id);
       
