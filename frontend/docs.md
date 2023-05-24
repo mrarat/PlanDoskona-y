@@ -46,6 +46,7 @@ courses: [
               ]
 
               "selected": true // added
+              "submit_count": 0 // added
           },
           {
               "course_unit_id": "486450",

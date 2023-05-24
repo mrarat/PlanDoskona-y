@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
+import { BACKEND_API_URL } from '@/config'
 const USOS_API_URL = 'https://usosapps.uw.edu.pl/services'
 
 // Select semester
@@ -158,8 +159,45 @@ import { useCoursesStore } from '@/store/coursesStore'
 const coursesStore = useCoursesStore()
 
 async function addCourse(course_id, term_id) {
-  let course = await get_course(course_id, term_id)
-  coursesStore.addCourse(course)
+  try {
+    let course = await get_course(course_id, term_id)
+    if (course) {
+      const promises = course.units.map(async (unit) => {
+        await axios
+          .get(BACKEND_API_URL + '/database_api/get_course_groups', {
+            params: {
+              course_unit_id: unit.id
+            }
+          })
+          .then(function (response) {
+            // Fetch all group submits from given unit and add them to data structure
+            let group_submits = response.data;
+            for (let group of unit.class_groups) {
+              const group_submits_index = group_submits.findIndex(
+                (g) => g.course_unit_id == group.course_unit_id && g.group_number == group.number
+              )
+
+              if (group_submits_index > -1) {
+                group.submit_count = group_submits[group_submits_index].submit_count
+              } else {
+                group.submit_count = 0
+              }
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+            throw error
+          })
+      })
+
+      await Promise.all(promises)
+    }
+
+    coursesStore.addCourse(course)
+  } 
+  catch (error) {
+    console.log(error)
+  }
 }
 </script>
 
