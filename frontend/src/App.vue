@@ -6,7 +6,6 @@ import CourseList from '@/components/CourseList.vue'
 
 // Drawer
 const drawer = ref(null)
-
 </script>
 
 <template>

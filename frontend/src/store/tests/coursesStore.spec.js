@@ -44,4 +44,3 @@ describe('coursesStore', () => {
     expect(store.courses).toHaveLength(0)
   })
 })
-

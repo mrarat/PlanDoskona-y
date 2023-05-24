@@ -16,4 +16,3 @@ describe('CourseSearch', () => {
     expect(wrapper.text()).toContain('dodaj przedmiot')
   })
 })
-

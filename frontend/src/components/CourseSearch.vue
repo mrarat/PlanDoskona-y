@@ -201,7 +201,9 @@ async function addCourse(course_id, term_id) {
     </v-list-item>
 
     <v-list-item>
-      <v-btn variant="outlined" @click="console.log(JSON.stringify(coursesStore.courses))"> stringify </v-btn>
+      <v-btn variant="outlined" @click="console.log(JSON.stringify(coursesStore.courses))">
+        stringify
+      </v-btn>
     </v-list-item>
 
     <v-list-item>

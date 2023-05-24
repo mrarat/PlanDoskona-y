@@ -9,7 +9,7 @@ const coursesStore = useCoursesStore()
       <v-expansion-panel-title color="teal">
         <span>{{ course.course_name.pl }}</span>
       </v-expansion-panel-title>
-      
+
       <v-expansion-panel-text>
         <v-btn
           color="orange-darken-4"

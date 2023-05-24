@@ -26,15 +26,16 @@ describe('CourseList', () => {
     expect(wrapper.text()).toContain('Inżynieria oprogramowania')
 
     const panelTitles = wrapper.findAllComponents({ name: 'v-expansion-panel-title' })
-    const panelTitle = panelTitles.filter(title => title.text().includes('Matematyka dyskretna')).at(0)
+    const panelTitle = panelTitles
+      .filter((title) => title.text().includes('Matematyka dyskretna'))
+      .at(0)
     await panelTitle.trigger('click')
 
     const panelContent = wrapper.findComponent({ name: 'v-expansion-panel-text' })
-    
+
     expect(panelContent.isVisible()).toBe(true)
 
     expect(panelContent.text()).toContain('Wykład gr. 1')
     expect(panelContent.text()).toContain('Ćwiczenia gr. 9')
   })
 })
-
