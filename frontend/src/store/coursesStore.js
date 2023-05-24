@@ -42,7 +42,7 @@ export const useCoursesStore = defineStore('coursesStore', {
               return;
 
             await axios
-              .get(BACKEND_API_URL + '/submit_course_group', {
+              .get(BACKEND_API_URL + '/database_api/submit_course_group', {
                 params: {
                   course_unit_id: group.course_unit_id,
                   group_number: group.number,

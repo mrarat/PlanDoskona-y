@@ -228,6 +228,12 @@ async function addCourse(course_id, term_id) {
             add IOP
           </v-btn>
         </v-list-item>
+
+        <v-list-item>
+          <v-btn variant="outlined" @click="coursesStore.submitCourses()">
+            submit
+          </v-btn>
+        </v-list-item>
       </v-list>
 
       <v-expansion-panels>
