@@ -1,10 +1,8 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
 
 const USOS_API_URL = 'https://usosapps.uw.edu.pl/services'
-const BACKEND_API_URL =
-  import.meta.env.VITE_API_URL == undefined ? 'http://localhost:8000' : import.meta.env.VITE_API_URL
 
 const message_sent = ref('')
 
@@ -248,6 +246,15 @@ function print_course(course_id, term_id) {
   ]
 }
 */
+
+import { useCoursesStore } from './store/coursesStore'
+const coursesStore = useCoursesStore()
+
+async function addCourse(course_id, term_id) {
+  let course = await get_course(course_id, term_id)
+  coursesStore.addCourse(course)
+}
+
 </script>
 
 <template>
@@ -281,7 +288,7 @@ function print_course(course_id, term_id) {
         </v-list-item>
 
         <v-list-item>
-          <v-btn variant="outlined" @click=""> dodaj przedmiot </v-btn>
+          <v-btn variant="outlined" @click="addCourse(select_course, select_semester)"> dodaj przedmiot </v-btn>
         </v-list-item>
 
         <v-list-item>
@@ -317,6 +324,12 @@ function print_course(course_id, term_id) {
         <v-list-item>
           <v-btn variant="outlined" @click="print_course('1000-212bMD', '2022L')">
             MD
+          </v-btn>
+        </v-list-item>
+
+        <v-list-item>
+          <v-btn variant="outlined" @click="console.log(coursesStore.courses)">
+            store
           </v-btn>
         </v-list-item>
       </v-list>
