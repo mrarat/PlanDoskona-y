@@ -9,7 +9,7 @@ import ResizeObserver from 'resize-observer-polyfill'
 global.ResizeObserver = ResizeObserver
 
 import { useCoursesStore } from '@/store/coursesStore'
-import data from './course_data.json'
+import data from '@/tests/course_data.json'
 
 describe('CourseList', () => {
   it('renders properly', async () => {
