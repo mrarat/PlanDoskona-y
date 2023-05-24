@@ -154,7 +154,7 @@ async function get_course(course_id, term_id) {
   return course
 }
 
-import { useCoursesStore } from '../store/coursesStore'
+import { useCoursesStore } from '@/store/coursesStore'
 const coursesStore = useCoursesStore()
 
 async function addCourse(course_id, term_id) {
@@ -198,6 +198,10 @@ async function addCourse(course_id, term_id) {
 
     <v-list-item>
       <v-btn variant="outlined" @click="console.log(coursesStore.courses)"> store </v-btn>
+    </v-list-item>
+
+    <v-list-item>
+      <v-btn variant="outlined" @click="console.log(JSON.stringify(coursesStore.courses))"> stringify </v-btn>
     </v-list-item>
 
     <v-list-item>

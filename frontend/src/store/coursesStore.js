@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { BACKEND_API_URL } from '../config'
+import { BACKEND_API_URL } from '@/config'
 
 export const useCoursesStore = defineStore('coursesStore', {
   state: () => ({
