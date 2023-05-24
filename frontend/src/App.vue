@@ -347,7 +347,7 @@ function print_course(course_id, term_id) {
     </v-navigation-drawer>
 
     <v-app-bar absolute color="pink">
-      <v-app-bar-nav-icon @click="drawer = !drawer">+</v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>PlanDoskonały</v-toolbar-title>
     </v-app-bar>
