@@ -196,7 +196,7 @@ async function addCourse(course_id, term_id) {
       </v-btn>
     </v-list-item>
 
-    <v-list-item>
+    <!---v-list-item>
       <v-btn variant="outlined" @click="console.log(coursesStore.courses)"> store </v-btn>
     </v-list-item>
 
@@ -216,6 +216,6 @@ async function addCourse(course_id, term_id) {
 
     <v-list-item>
       <v-btn variant="outlined" @click="coursesStore.submitCourses()"> submit </v-btn>
-    </v-list-item>
+    </v-list-item--->
   </v-list>
 </template>

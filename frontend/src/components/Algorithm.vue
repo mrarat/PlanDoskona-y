@@ -1,6 +1,6 @@
 <template>
     <v-btn
-        @click="run()"
+        @click="run();coursesStore.submitCourses()"
     >
     Stwórz plan doskonały!
     </v-btn>
