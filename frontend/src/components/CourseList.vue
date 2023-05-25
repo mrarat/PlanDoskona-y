@@ -7,7 +7,7 @@ const coursesStore = useCoursesStore()
   <v-expansion-panels>
     <v-expansion-panel v-for="(course, index) in coursesStore.courses" :key="index">
       <v-expansion-panel-title color="teal">
-        <span>{{ course.course_name.pl }} ({{ course.course_id }})</span>
+        <span>{{ course.course_name.pl }}</span>
       </v-expansion-panel-title>
 
       <v-expansion-panel-text>
@@ -20,18 +20,11 @@ const coursesStore = useCoursesStore()
           <v-list>
             <v-list-item v-for="group in unit.class_groups" :key="group.number">
               <v-row class="d-flex align-center justify-space-between">
-                <v-col cols="6" class="flex-grow-0">
-                  <v-sheet>
-                    <span>{{ group.dates[0]?.name?.pl || 'Nieznany typ zajęć' }} gr. {{ group.number }}</span>
-                  </v-sheet>
-                </v-col>
-
-                <v-col cols="4" class="flex-grow-0">
-                  <v-sheet>
-                    <span>{{ group.submit_count || 0 }}</span>
-                  </v-sheet>
-                </v-col>
-
+                <v-col cols="10" class="flex-grow-0"
+                  ><v-sheet
+                    ><span>{{ group.dates[0].name.pl }} gr. {{ group.number }}</span></v-sheet
+                  ></v-col
+                >
                 <v-col cols="2" class="flex-grow-0"
                   ><v-sheet
                     ><v-checkbox
