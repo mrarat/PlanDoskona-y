@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 import CourseSearch from '@/components/CourseSearch.vue'
 import CourseList from '@/components/CourseList.vue'
+import Algorithm from '@/components/Algorithm.vue'
 
 // Drawer
 const drawer = ref(null)
@@ -22,6 +23,7 @@ const drawer = ref(null)
       <div style="overflow-y: scroll; height: 100%">
         <CourseSearch></CourseSearch>
         <CourseList></CourseList>
+        <Algorithm></Algorithm>
       </div>
     </v-navigation-drawer>
 
