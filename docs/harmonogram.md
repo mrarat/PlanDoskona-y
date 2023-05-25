@@ -20,10 +20,12 @@
 
 ## Sprint 3 - deadline 25.05.2023, 3 tygodnie
 - zaimplementowanie przesyłania statystyk do serwera
-- stworzenie docelowego UI
+- refactoring algorytmu
 - stworzenie opisu architektury
+- usprawnienie UI
 
 ## Sprint 4 - deadline 08.06.2023, 2 tygodnie
+- stworzenie docelowego UI
 - bugfixes
 - usprawnienia
 - prezentacja
