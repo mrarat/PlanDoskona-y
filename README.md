@@ -7,9 +7,10 @@ In heroku dashboard set buildpacks to (order matters) :
 2. heroku/python
 
 Set environment variables (config vars) : 
-- `DJANGO_DEBUG` = FALSE
+- `DJANGO_DEBUG` = False
 - `SECRET_KEY` = \<your secret key\>
 - `VITE_API_URL` = \<link to your website\>
+- `HEROKU` = True
 
 ## Link
 Hosted on : https://plandoskonaly.herokuapp.com/

@@ -25,6 +25,4 @@ urlpatterns = [
     path('', views.index, name='index'), # serves Vue.js frontend at root
     path('admin/', admin.site.urls),
     path('database_api/', include('database_api.urls')),
-    path('mymessage/', include('mymessage.urls')),
-    path('', include("countries.urls"))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # maybe not needed
