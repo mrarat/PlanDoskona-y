@@ -56,8 +56,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'rest_framework', # tutorial https://realpython.com/api-integration-in-python/#django-rest-framework
     'corsheaders', # fix for 'Cross-Origin Request Blocked'
-    'countries', # tutorial
-    'mymessage', # api-test
     'database_api',
 ]
 
