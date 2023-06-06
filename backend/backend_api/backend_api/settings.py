@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os, dj_database_url
 
 from mimetypes import add_type
 add_type('text/javascript', '.js') # fixes error 'Loading module from “http://127.0.0.1:8000/static/assets/index-b2e0c0ec.js” was blocked because of a disallowed MIME type (“text/plain”).'
@@ -28,6 +28,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'debug-secret-key') # I do not know wh
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False' # when deploying create an environment variabele 'DJANGO_DEBUG = False'
+
+HEROKU = os.environ.get('HEROKU', '') == 'True'
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
@@ -95,13 +97,21 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if HEROKU:
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        )
     }
-}
-
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
