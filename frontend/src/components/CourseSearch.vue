@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+import { BACKEND_API_URL } from '@/config'
 
 const USOS_API_URL = 'https://usosapps.uw.edu.pl/services'
 
@@ -130,6 +131,19 @@ async function get_unit(course_unit_id) {
   const promises = unit.class_groups.map(async (group) => {
     group.selected = true
     group.dates = await query_classgroup_dates(group.course_unit_id, group.number)
+    await axios
+    .get(BACKEND_API_URL + 'database_api/get_course_groups/', {
+      params: {
+        course_unit_id: group.course_unit_id
+      }
+    })
+    .then(function (response) {
+      for (let i = 0; i < response.data.length; ++i) {
+        if (response.data[i].group_number == group.number) {
+          group.submit_count = response.data[i].submit_count
+        }
+      }
+    })
     return group
   })
 
@@ -195,27 +209,5 @@ async function addCourse(course_id, term_id) {
         dodaj przedmiot
       </v-btn>
     </v-list-item>
-
-    <!---v-list-item>
-      <v-btn variant="outlined" @click="console.log(coursesStore.courses)"> store </v-btn>
-    </v-list-item>
-
-    <v-list-item>
-      <v-btn variant="outlined" @click="console.log(JSON.stringify(coursesStore.courses))">
-        stringify
-      </v-btn>
-    </v-list-item>
-
-    <v-list-item>
-      <v-btn variant="outlined" @click="addCourse('1000-212bMD', '2022L')"> add MD </v-btn>
-    </v-list-item>
-
-    <v-list-item>
-      <v-btn variant="outlined" @click="addCourse('1000-214bIOP', '2022L')"> add IOP </v-btn>
-    </v-list-item>
-
-    <v-list-item>
-      <v-btn variant="outlined" @click="coursesStore.submitCourses()"> submit </v-btn>
-    </v-list-item--->
   </v-list>
 </template>
