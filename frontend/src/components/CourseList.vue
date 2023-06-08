@@ -25,14 +25,19 @@ const coursesStore = useCoursesStore()
                     ><span>{{ group.dates[0].name.pl }} gr. {{ group.number }}</span></v-sheet
                   ></v-col
                 >
-                <v-col cols="2" class="flex-grow-0"
-                  ><v-sheet
-                    ><v-checkbox
+                
+                <v-col cols="2" class="flex-grow-0">
+                  <v-sheet>
+                    <v-row align="center">
+                      <div style="margin-right: 10px">
+                      {{ group.submit_count || 0 }}
+                        </div>
+                    <v-checkbox
                       hide-details
                       density="compact"
                       class="float-right"
                       v-model="group.selected"
-                    ></v-checkbox></v-sheet
+                    ></v-checkbox></v-row></v-sheet
                 ></v-col>
               </v-row>
             </v-list-item>

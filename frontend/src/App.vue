@@ -10,7 +10,6 @@ const drawer = ref(null)
 </script>
 
 <template>
-  <div style="width: 100%; height: 62px"></div>
   <v-app id="inspire">
     <v-navigation-drawer
       app
@@ -22,8 +21,6 @@ const drawer = ref(null)
       permanent
     >
       <div style="overflow-y: scroll; height: 100%">
-        
-        <div style="width: 100%; height: 53px"></div>
         <CourseSearch></CourseSearch>
         <CourseList></CourseList>
       </div>

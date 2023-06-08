@@ -1,4 +1,6 @@
 # PlanDoskonaly
+[![codecov](https://codecov.io/gh/mrarat/PlanDoskonaly/branch/main/graph/badge.svg?token=RSMF9W3TF7)](https://codecov.io/gh/mrarat/PlanDoskonaly)
+
 Project is prepared to be deployed on [Heroku](https://www.heroku.com)
 
 ## Configuration in heroku dashboard:
