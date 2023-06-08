@@ -26,7 +26,7 @@ const coursesStore = useCoursesStore()
                   ></v-col
                 >
                 
-                <v-col cols="2" class="flex-grow-0">
+                <v-col cols="2" class="flex-grow-0" v-if="group.dates[0].name.pl!='Wykład'">
                   <v-sheet>
                     <v-row align="center">
                       <div style="margin-right: 10px">
